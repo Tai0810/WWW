@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="profile" content="https://themeforest.net/user/mironcoder" />
+<title>Web bán thiết bị âm thanh</title>
+<link rel="icon" href="images/webicon.png" />
+<link rel="stylesheet" href="fonts/flaticon/flaticon.css" />
+<link rel="stylesheet" href="fonts/icofont/icofont.min.css" />
+<link rel="stylesheet" href="fonts/fontawesome/fontawesome.min.css" />
+<link rel="stylesheet" href="vendor/venobox/venobox.min.css" />
+<link rel="stylesheet" href="vendor/slickslider/slick.min.css" />
+<link rel="stylesheet" href="vendor/niceselect/nice-select.min.css" />
+<link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+	<header th:replace="~{/web/fragments/header :: header}"></header>
+
+	<section class="inner-section single-banner"
+		style="background: url(images/amthanh.jpg) no-repeat center">
+		<div class="container">
+			<h2>Sản phẩm</h2>
+		</div>
+	</section>
+	<section class="inner-section shop-part">
+		<div class="container">
+			<div class="row content-reverse">
+				<div class="col-lg-3">
+					<div class="shop-widget">
+						<h6 class="shop-widget-title">Theo thể loại</h6>
+
+						<ul class="shop-widget-list shop-widget-scroll">
+							<li th:each="item : ${coutnProductByCategory}">
+								<div class="shop-widget-content">
+									<a href="javascript:void(0);"
+										th:href="@{/productByCategory(id=${item[0]})}"> <label
+										for="cate1" style="color: #119744">[[${item[1]}]]</label>
+									</a>
+								</div> <span class="shop-widget-number">([[${item[2]}]])</span>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="top-filter">
+								<div class="filter-show">
+									<label class="filter-label"></label>
+								</div>
+							</div>
+						</div>
+
+						<div
+							class="row row-cols-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4">
+							<div class="col" th:each="item : ${products}">
+								<div class="product-card">
+									<div class="product-media">
+										<a class="product-image" href="javascript:void(0);"> <img
+											th:src="@{'/loadImage?imageName='+${item.productImage}}"
+											alt="product" />
+										</a>
+										<div class="product-widget">
+											<a style="background-color: #cf558a"
+												title="Chi tiết sản phẩm"
+												th:href="@{/productDetail(id=${item.productId})}"
+												class="fas fa-eye"> </a>
+										</div>
+									</div>
+									<div class="product-content">
+										<h6 class="product-name">
+											<a href="javascript:void(0);">[[${item.productName}]]</a>
+										</h6>
+										<h6 class="product-price">
+											<span style="color: #cf558a">[[${#numbers.formatDecimal(item.price
+												- (item.price * item.discount/100), 1, 'DEFAULT', 0,
+												'DEFAULT')}+' đ']]</span>
+										</h6>
+
+										<a style="background-color: #cf558a" class="product-add1"
+											title="Thêm giỏ hàng"
+											th:href="@{/addToCart(productId=${item.productId})}"> <i
+											class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
+										</a>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="bottom-paginate">
+									<p class="page-info"></p>
+									<ul class="pagination">
+
+										<li th:each="pageNumber : ${pageNumbers}"
+											th:if="${products.totalPages > 0}" class="page-item"><a
+											class="page-link" style="background-color: #cf558a"
+											th:href="@{/products(size=${products.size}, page=${pageNumber})}"
+											th:class="${pageNumber==products.number + 1} ? 'page-link active'">
+												[[${pageNumber}]] </a></li>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+
+	<footer th:replace="~{/web/fragments/footer :: footer}"></footer>
+
+	<script src="vendor/bootstrap/jquery-1.12.4.min.js"></script>
+	<script src="vendor/bootstrap/popper.min.js"></script>
+	<script src="vendor/bootstrap/bootstrap.min.js"></script>
+	<script src="vendor/countdown/countdown.min.js"></script>
+	<script src="vendor/niceselect/nice-select.min.js"></script>
+	<script src="vendor/slickslider/slick.min.js"></script>
+	<script src="vendor/venobox/venobox.min.js"></script>
+	<script src="js/nice-select.js"></script>
+	<script src="js/countdown.js"></script>
+	<script src="js/accordion.js"></script>
+	<script src="js/venobox.js"></script>
+	<script src="js/slick.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

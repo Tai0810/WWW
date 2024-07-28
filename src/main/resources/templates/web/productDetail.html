@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <meta
+    http-equiv="content-type"
+    content="text/html;charset=utf-8"
+  />
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="profile" content="https://themeforest.net/user/mironcoder" />
+    <title>Web bán thiết bị âm thanh</title>
+	<link rel="icon" href="images/webicon.png" />
+    <link rel="stylesheet" href="fonts/flaticon/flaticon.css" />
+    <link rel="stylesheet" href="fonts/icofont/icofont.min.css" />
+    <link rel="stylesheet" href="fonts/fontawesome/fontawesome.min.css" />
+    <link rel="stylesheet" href="vendor/venobox/venobox.min.css" />
+    <link rel="stylesheet" href="vendor/slickslider/slick.min.css" />
+    <link rel="stylesheet" href="vendor/niceselect/nice-select.min.css" />
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/product-details.css" />
+  </head>
+  <body>
+   
+		<header th:replace="~{/web/fragments/header :: header}"></header>
+    
+    <section
+      class="single-banner inner-section"
+      style="background: url(images/bannerhome.jpg) no-repeat center">
+      <div class="container">
+        <h2>Chi tiết sản phẩm</h2>
+      </div>
+    </section>
+    
+    <section class="inner-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="details-gallery">
+              <ul class="details-preview">
+                <li><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product"/></li>
+              </ul>
+              <ul class="details-thumb">
+                <li>
+                	<img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" />
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            
+            <div class="details-content">
+              <h3 class="details-name">
+                <a href="#">[[${product.productName}]]</a>
+              </h3>
+              <div class="details-meta">
+                <p>Mã sản phẩm:<span>[[${product.productId}]]</span></p>
+                <p>Loại sản phẩm:<a href="#">[[${product.category.categoryName}]]</a></p>
+              </div>
+              <h3 class="details-price">
+                <span style="color: #cf558a">[[${#numbers.formatDecimal(product.price - (product.price * product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</span>
+              </h3>
+              <p class="details-desc">
+                [[${product.description}]]
+              </p>
+              <div class="details-list-group">
+                <label class="details-list-title">Xem thêm:</label>
+                <ul class="details-tag-list">
+                  <li th:each="item : ${categoryList}">
+                  	<a th:href="@{/productByCategory(categoryId=${item.categoryId})}">[[${item.categoryName}]]</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="details-list-group">
+                <label class="details-list-title">Share:</label>
+                <ul class="details-share-list">
+                  <li>
+                    <a style="color: #cf558a" href="javascript:void(0);" class="icofont-facebook" title="Facebook"></a>
+                  </li>
+                  <li>
+                    <a style="color: #cf558a" href="javascript:void(0);" class="icofont-instagram" title="Instagram"></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="details-add-group">
+                <a class="product-add1" style="background-color: #cf558a" title="Thêm giỏ hàng" th:href="@{/addToCart(productId=${product.productId})}">
+                  <i style="color: white" class="fas fa-shopping-basket"></i>
+                  <span style="color: white">Thêm giỏ hàng</span>
+                </a>
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="inner-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="product-details-frame">
+              <h3 class="frame-title">Mô tả sản phẩm</h3>
+              <div class="tab-descrip">
+                <p>
+                  [[${product.description}]]
+                </p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <section class="section newitem-part">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section-heading">
+						<h2>Sản phẩm cùng loại</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<ul class="new-slider slider-arrow">
+						<li th:each="item : ${productByCategory}">
+							<div class="product-card">
+								<div class="product-media">
+									<a class="product-image"
+										href="javascript:void(0);">
+										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" />
+									</a>
+									<div class="product-widget">
+										<a
+											style="background-color: #cf558a"
+											title="Chi tiết sản phẩm"
+											th:href="@{/productDetail(id=${item.productId})}"
+											class="fas fa-eye">
+										</a>
+									</div>
+								</div>
+								<div class="product-content">
+									<h6 class="product-name">
+										<a href="product-video.html">[[${item.productName}]]</a>
+									</h6>
+									<h6 class="product-price">
+										<span style="color: #cf558a">[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</span>
+									</h6>
+									<a style="background-color: #cf558a" class="product-add1" title="Thêm giỏ hàng" th:href="@{/addToCart(productId=${product.productId})}">
+										<i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
+									</a>
+									
+								</div>
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="section-btn-25">
+						<a style="border-color: #cf558a" th:href="@{/products}" class="btn btn-outline"><i
+							class="fas fa-eye" style="color: #cf558a"></i><span style="color: #cf558a">xem thêm</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+		<footer th:replace="~{/web/fragments/footer :: footer}"></footer>
+    
+    <script src="vendor/bootstrap/jquery-1.12.4.min.js"></script>
+    <script src="vendor/bootstrap/popper.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="vendor/countdown/countdown.min.js"></script>
+    <script src="vendor/niceselect/nice-select.min.js"></script>
+    <script src="vendor/slickslider/slick.min.js"></script>
+    <script src="vendor/venobox/venobox.min.js"></script>
+    <script src="js/nice-select.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/accordion.js"></script>
+    <script src="js/venobox.js"></script>
+    <script src="js/slick.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
